@@ -1,4 +1,4 @@
-# 🍸 Cocktail
+# 🍸 Velvet Pour
 
 > A visually stunning and interactive cocktail experience built with React, GSAP, and Tailwind CSS.
 
@@ -11,7 +11,7 @@
 
 # ✨ Overview
 
-Cocktail is a modern landing page experience that showcases premium cocktails through immersive animations, smooth scrolling effects, and visually appealing layouts.
+Velvet Pour is a modern landing page experience that showcases premium cocktails through immersive animations, smooth scrolling effects, and visually appealing layouts.
 
 The project focuses on delivering a high-end user experience using industry-standard frontend technologies and animation techniques. Every section is carefully designed to create an engaging storytelling experience for users.
 
