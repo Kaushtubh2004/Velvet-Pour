@@ -85,7 +85,7 @@ src/
 
 # 📸 Screenshots
 
-![Screenshots](./screenshots/screenshot.png)
+![Screenshots](./public/screenshots/screenshot.png)
 
 ---
 
