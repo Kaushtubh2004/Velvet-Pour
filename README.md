@@ -157,7 +157,7 @@ This project helped strengthen my understanding of:
 
 # 🔗 Live Demo
 
-👉 Add your deployed Vercel/Netlify link here
+[Live Link](https://velvet-pour-zeta.vercel.app/)
 
 ---
 
