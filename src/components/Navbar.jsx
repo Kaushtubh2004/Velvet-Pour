@@ -7,7 +7,6 @@ const Navbar = () => {
   const navRef = useRef(null);
 
   useGSAP(() => {
-    // Navbar background animation on scroll
     gsap.fromTo(
       navRef.current,
       {
@@ -24,32 +23,31 @@ const Navbar = () => {
         },
       }
     );
+  });
 
-    // Hover animation for links
-    const links = gsap.utils.toArray(".nav-link");
+  // nav link animation on hover
+  useGSAP(() => {
+    const links = document.querySelectorAll(".nav-link");
 
     links.forEach((link) => {
-      link.addEventListener("mouseenter", () => {
-        gsap.to(link, {
-          y: -3,
-          scale: 1.08,
-          color: "#f59e0b",
-          duration: 0.3,
-          ease: "power2.out",
-        });
-      });
+      const letters = link.querySelectorAll(".letter");
 
-      link.addEventListener("mouseleave", () => {
-        gsap.to(link, {
-          y: 0,
-          scale: 1,
-          color: "#ffffff",
-          duration: 0.3,
-          ease: "power2.out",
-        });
+      link.addEventListener("mouseenter", () => {
+        gsap.fromTo(
+          letters,
+          {
+            y: "100%",
+          },
+          {
+            y: "0%",
+            stagger: 0.03,
+            duration: 0.5,
+            ease: "power4.out",
+          }
+        );
       });
     });
-  });
+  }, []);
 
   return (
     <nav ref={navRef} className="fixed top-0 left-0 w-full z-50">
@@ -64,9 +62,16 @@ const Navbar = () => {
             <li key={link.id}>
               <a
                 href={`#${link.id}`}
-                className="nav-link text-white transition-colors"
+                className="nav-link text-white overflow-hidden inline-block"
               >
-                {link.title}
+                {link.title.split("").map((char, index) => (
+                  <span
+                    key={index}
+                    className="letter inline-block"
+                  >
+                    {char === " " ? "\u00A0" : char}
+                  </span>
+                ))}
               </a>
             </li>
           ))}

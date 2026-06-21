@@ -178,9 +178,9 @@ const Loader = ({ onComplete }) => {
 
             {/* Brand */}
             <h1
-                className="mt-6 text-3xl font-light tracking-[8px] text-white"
+                className="text-white font-semibold loader-font"
             >
-                VELVET POUR
+               Velvet Pour
             </h1>
 
             {/* Loading Dots */}
