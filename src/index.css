@@ -23,7 +23,6 @@ body {
     color: white;
     scroll-behavior: smooth;
     overflow-x: hidden;
-    html,
 }
 
 @utility flex-center {
@@ -89,7 +88,7 @@ body {
     }
 
     .noisy {
-        @apply absolute inset-0 size-full bg-[url("/images/noise.png")];
+    @apply absolute inset-0 size-full z-10 pointer-events-none bg-[url("/images/noise.png")];
     }
 
     #hero {

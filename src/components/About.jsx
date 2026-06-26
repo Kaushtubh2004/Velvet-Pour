@@ -1,8 +1,13 @@
+import { useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import { SplitText } from 'gsap/all'
 import gsap from 'gsap'
+import { useImageHoverDistortion } from './useImageHoverDistortion'
 
 const About = () => {
+    const sectionRef = useRef(null)
+
+    // 1) Your existing entrance animation — unchanged
     useGSAP(() => {
         const titleSplit = SplitText.create('#about h2', {
             type: 'words'
@@ -12,7 +17,6 @@ const About = () => {
             scrollTrigger: {
                 trigger: "#about",
                 start: 'top center',
-
             }
         })
         scrollTimeline
@@ -22,11 +26,21 @@ const About = () => {
             .from('.top-grid div, .bottom-grid div', {
                 opacity: 0, duration: 1, ease: 'power1.inOut', stagger: 0.04
             }, '-=0.5')
+    }, { scope: sectionRef })
+
+    // 2) Obys-style liquid distortion on hover (WebGL).
+    //    Replaces the old CSS zoom + parallax — the shader now does the
+    //    zoom, the cursor parallax AND the liquid warp together. Tune the
+    //    feel with `strength` (warp amount), `chroma` (RGB split), `zoom`.
+    useImageHoverDistortion(sectionRef, {
+        selector: '.top-grid > div, .bottom-grid > div',
+        zoom: 1.12,
+        strength: 0.045,
+        chroma: 0.015,
     })
-    
 
     return (
-        <div id="about">
+        <div id="about" ref={sectionRef}>
             <div className="mb-16 md:px-0 px-5">
                 <div className="content">
                     <div className="md:col-span-8">
