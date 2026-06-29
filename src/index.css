@@ -389,18 +389,44 @@ body {
         }
 
         .content {
-            @apply container mx-auto lg:py-14 2xl:py-32 py-16 flex flex-col justify-between gap-10 min-h-dvh;
+            @apply container mx-auto lg:py-14 2xl:py-32 py-16 flex flex-col justify-center items-center gap-16 min-h-dvh;
 
             h2 {
-                @apply lg:text-6xl 2xl:text-8xl text-5xl font-modern-negra md:translate-y-0 translate-y-5;
+                @apply lg:text-6xl 2xl:text-8xl text-5xl font-modern-negra text-center;
             }
 
             h3 {
-                @apply uppercase xl:text-base 2xl:text-lg text-base mb-2;
+                @apply uppercase xl:text-base 2xl:text-lg text-base mb-3 text-yellow tracking-wide;
             }
 
             p {
-                @apply lg:text-2xl 2xl:text-3xl text-sm;
+                @apply lg:text-xl 2xl:text-2xl text-base text-white-100/80 leading-relaxed;
+            }
+        }
+
+        .info-grid {
+            @apply grid grid-cols-1 md:grid-cols-2 gap-y-12 gap-x-12 w-full max-w-4xl mx-auto items-stretch;
+        }
+
+        /* Two sections, split by a vertical rule on the second column. */
+        .info-col {
+            @apply relative flex flex-col items-center text-center px-10 gap-10;
+
+            &:not(:first-child) {
+                @apply md:border-l border-white/15;
+            }
+
+            .info-block {
+                @apply space-y-1;
+            }
+
+            .wave-text {
+                @apply inline-block cursor-pointer origin-bottom mb-1;
+
+                /* Keep the lifted letters from being clipped by neighbours. */
+                * {
+                    @apply will-change-transform;
+                }
             }
         }
 
