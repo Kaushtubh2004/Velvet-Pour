@@ -2,12 +2,12 @@ import { useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import { SplitText } from 'gsap/all'
 import gsap from 'gsap'
-import { useImageHoverDistortion } from './useImageHoverDistortion'
+import { useImageWaterRipple } from './useImageWaterRipple'
 
 const About = () => {
     const sectionRef = useRef(null)
+    const headingRef = useRef(null)
 
-    // 1) Your existing entrance animation — unchanged
     useGSAP(() => {
         const titleSplit = SplitText.create('#about h2', {
             type: 'words'
@@ -28,27 +28,70 @@ const About = () => {
             }, '-=0.5')
     }, { scope: sectionRef })
 
-    // 2) Obys-style liquid distortion on hover (WebGL).
-    //    Replaces the old CSS zoom + parallax — the shader now does the
-    //    zoom, the cursor parallax AND the liquid warp together. Tune the
-    //    feel with `strength` (warp amount), `chroma` (RGB split), `zoom`.
-    useImageHoverDistortion(sectionRef, {
+    
+    useImageWaterRipple(sectionRef, {
         selector: '.top-grid > div, .bottom-grid > div',
-        zoom: 1.12,
-        strength: 0.045,
-        chroma: 0.015,
+        strength: 0.45,
+        chroma: 0.18,
+        damping: 0.985,
     })
+
+    useGSAP(() => {
+        const heading = headingRef.current
+        if (!heading) return
+        const ghost = heading.querySelector('.about-heading__ghost')
+        const title = heading.querySelector('h2')
+        if (!ghost || !title) return
+
+        gsap.set(ghost, { '--reveal': -12, xPercent: 0, yPercent: 0, transformOrigin: 'left center' })
+        gsap.set(title, { transformOrigin: 'left center' })
+
+        const enter = () => {
+            gsap.to(ghost, {
+                '--reveal': 112, xPercent: 2.5, yPercent: -8,
+                duration: 0.85, ease: 'power3.out', overwrite: 'auto',
+            })
+            gsap.to(title, {
+                xPercent: -1.5, yPercent: 5, skewX: -5,
+                duration: 0.85, ease: 'power3.out', overwrite: 'auto',
+            })
+        }
+        const leave = () => {
+            gsap.to(ghost, {
+                '--reveal': -12, xPercent: 0, yPercent: 0,
+                duration: 0.55, ease: 'power2.inOut', overwrite: 'auto',
+            })
+            gsap.to(title, {
+                xPercent: 0, yPercent: 0, skewX: 0,
+                duration: 0.55, ease: 'power2.inOut', overwrite: 'auto',
+            })
+        }
+
+        heading.addEventListener('mouseenter', enter)
+        heading.addEventListener('mouseleave', leave)
+        return () => {
+            heading.removeEventListener('mouseenter', enter)
+            heading.removeEventListener('mouseleave', leave)
+        }
+    }, { scope: sectionRef })
 
     return (
         <div id="about" ref={sectionRef}>
             <div className="mb-16 md:px-0 px-5">
                 <div className="content">
-                    <div className="md:col-span-8">
+                    <div className="md:col-span-8 ">
                         <p className="badge">Best Cocktails</p>
-                        <h2>
-                            Where every detail matters <span className="text-white">-</span>
-                            from muddle to garnish
-                        </h2>
+                        <div>
+                            <div className="about-heading" ref={headingRef}>
+                                <h2>
+                                    Where every detail matters <span className="text-white">-</span>
+                                    from muddle to garnish
+                                </h2>
+                                <span className="about-heading__ghost" aria-hidden="true">
+                                    Where every detail matters - from muddle to garnish
+                                </span>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="sub-content">
